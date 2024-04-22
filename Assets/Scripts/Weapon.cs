@@ -4,11 +4,4 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    [SerializeField] PlayerInputReader _playerInputReader;
-    [SerializeField] Animator _animator;
-
-    private void OnEnable()
-    {
-        
-    }
 }

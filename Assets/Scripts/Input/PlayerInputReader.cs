@@ -5,12 +5,15 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [CreateAssetMenu(menuName = "InputReader")]
-public class PlayerInputReader : ScriptableObject, GameInput.IGameplayActions
+public class PlayerInputReader : ScriptableObject, GameInput.IGameplayActions, GameInput.ICombatActions
 {
     private GameInput _gameInput;
+
     public event Action<Vector2> MoveEvent;
-    //public event Action MoveEvent;
     private Vector2 _direction;
+
+    public event Action AttackEvent;
+    public event Action AttackCancelledEvent;
 
     public Vector2 Direction { get { return _direction; } private set { _direction = value; } }
 
@@ -22,6 +25,7 @@ public class PlayerInputReader : ScriptableObject, GameInput.IGameplayActions
 
             //Add callbacks for inputs (started, perfomed, canceled)
             _gameInput.Gameplay.SetCallbacks(this);
+            _gameInput.Combat.SetCallbacks(this);
 
             SetGameInput();
         }
@@ -30,6 +34,7 @@ public class PlayerInputReader : ScriptableObject, GameInput.IGameplayActions
     public void SetGameInput()
     {
         _gameInput.Gameplay.Enable();
+        _gameInput.Combat.Enable();
 
         //Set Movement whitout InputAction.started
         //_gameInput.Gameplay.Move.performed += ReadInputForMovement;
@@ -44,12 +49,14 @@ public class PlayerInputReader : ScriptableObject, GameInput.IGameplayActions
         //MoveEvent?.Invoke(_direction);
     }
 
-    //private void ReadInputForMovement(InputAction.CallbackContext context) 
-    //{
-    //    //_direction = context.ReadValue<Vector2>();
-    //    _direction = context.ReadValue<Vector2>();
+    public void OnAttack(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Performed)
+        {
+            //Debug.Log("Input Atacar");
+            AttackEvent?.Invoke();
+        }
 
-    //    MoveEvent?.Invoke(_direction);
-    //    //return _direction;
-    //}
+
+    }
 }

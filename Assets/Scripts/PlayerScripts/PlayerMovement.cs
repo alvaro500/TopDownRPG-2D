@@ -20,15 +20,11 @@ public class PlayerMovement : MonoBehaviour
         _playerInputReader.MoveEvent += HandleMove;
     }
 
-    //private void HandleMOve(Vector2 direction)
     private void HandleMove(Vector2 direction)
     {
-        //_moveDirection = direction;
-		_movement = direction;
+        _movement = direction;
+        
 		//_playerAnimations.SetUpAnimations(_movement);
-
-        //Debug.Log("En X: "+ direction.x);
-        //Debug.Log("En Y: "+ direction.y);
     }
 
     // Update is called once per frame
@@ -43,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
         //transform.position += new Vector3(_moveDirection.x, _moveDirection.y) * _speed;
         //transform.position += new Vector3(_moveDirection.x, _moveDirection.y) * (_speed * Time.deltaTime);
 		_rigidbody.MovePosition(_rigidbody.position + _movement * (_moveSpeed * Time.fixedDeltaTime));
-		_playerAnimations.SetUpAnimations(_movement);
+		_playerAnimations.SetUpMovementAnimations(_movement);
 		
     }
 }

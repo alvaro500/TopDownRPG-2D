@@ -6,7 +6,7 @@ public class PlayerAnimations : MonoBehaviour
 {
 	[SerializeField] Animator _playerAnimator;
 	
-	public void SetUpAnimations(Vector2 movementVector)
+	public void SetUpMovementAnimations(Vector2 movementVector)
 	{
 		_playerAnimator.SetFloat("moveX", movementVector.x);
 		_playerAnimator.SetFloat("moveY", movementVector.y);
